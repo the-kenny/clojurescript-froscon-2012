@@ -1,0 +1,201 @@
+#+TITLE:     ClojureScript
+#+AUTHOR:    Moritz Ulrich
+#+EMAIL:     moritz@tarn-vedra.de
+#+DATE:      2012-08-12 Sun
+#+DESCRIPTION: More parentheses for the browser
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 2
+#+BEAMER_HEADER_EXTRA: \usetheme{Boadilla}\usecolortheme{default}
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+
+#+STARTUP: indent beamer
+
+* Abstract                                                         :noexport:
+An introduction to ClojureScript - a modern LISP, compiling to Javascript.
+
+* Description                                                      :noexport:
+Clojure is a modern LISP running on the JVM. Persistent data
+structures, powerful macros, simple multithreading semantics and the
+read-eval-print-loop make programming easy and productive.
+
+ClojureScripts opens the doors to a new versatile platform: The
+browser.
+
+This presentation gives an overview over the ClojureScript project:
+IDEs, Tools, Libraries, and advantages and disadvantages in comparison
+with pure Javascript.
+
+* Brainstorming                                                    :noexport:
+  - Wieso ClojureScript?
+  - Was bietet es im Vergleich zu JavaScript?
+  - Warum nimmt man nicht einfach JavaScript, wo es viele Ressourcen, Programmierer, Tools gibt
+  - Performance
+
+* Vorbereitung [0/1]                                               :noexport:
+  - [ ] 'Der Gute Vortrag' lesen
+
+* Outline                                                          :noexport:
+- Minimale Einführung in Clojure(Script)
+  - Persistent Data Structures
+  - Makros
+  - ???
+- Wieso Javascript als Target?
+  - Startup-Time
+  - Code-Sharing zwischen Client & Server
+  - Neue Targets (Browser, node.js)
+- Beispiele
+  - Javascript-Interop
+  - DOM-Manipulation
+    - Google Closure
+    - jQuery
+- Performance
+  - Closure Compiler
+  - Größe des generierten Codes
+- Anwendungszwecke
+  - Was bietet ClojureScript im Vergleich mit Javascript?
+  - Verfügbare Libraries
+- Tool-Support
+  - Fehlende interaktive Entwicklungsumgebung
+  - ClojureScript One
+- In Arbeit
+  - Source-Maps
+
+
+
+* Introduction
+** Hello World!
+*** Clojure
+#+BEGIN_SRC clojure
+  (println "Hello World!")
+#+END_SRC
+
+*** ClojureScript
+#+BEGIN_SRC clojure
+  (.log js/console "Hello World")
+#+END_SRC
+
+** Clojure?
+- Modern LISP
+- Targets the JVM
+  - Great Java-Interop
+- Persistent Data Structures
+- Easy concurrent programming
+  - Built-in STM
+  - Reactive Actors ('Agents')
+  - Good encapsulation of State
+
+** ClojureScript?
+*** All advantages of Clojure
+- Functional Programming
+- Persistent Data Structures
+- Great Host Interop
+*** Runs in the Browser
+- Wide target range
+*** No =eval=
+
+** ClojureScript!
+*** TODO Created by Rich Hickey in %%DATE%%
+*** Clojure Compiler which targets Javascript
+*** Same Runtime as Clojure
+- Data Structures
+- clojure.core
+- Code Sharing possible
+*** Cleaner Codebase
+- 100% Clojure, no Java/Javascript
+- Much of Clojure is implemented in Java
+
+** Why target Javascript?
+- Faster startup time
+- Widespread platform (Browsers)
+- Node.js
+- Advantages when using same code Server- and Client-Side
+
+* Code Samples
+** Platform Interop
+*** Function calls
+#+BEGIN_SRC clojure
+  (.log js/console "Foobar")
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (js/alert 42)
+#+END_SRC
+
+*** Properties
+#+BEGIN_SRC clojure
+  (.-location js/window)
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (set! (.-prop obj) "Foo")
+#+END_SRC
+** DOM Manipulation
+- Google Closure
+- jQuery
+
+** Google Closure \\ Javascript Library by Google
+*** Advantages                                                      :BMCOL:
+:PROPERTIES:
+:BEAMER_col: .45
+:END:
+- Used by ClojureScript itself
+- Very rich library containing many kinds of UI elements
+- Integrates nicely with the Google Closure compiler
+
+*** Disadvantages                                                        :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.45
+:END:
+- Hard to use
+- Model-View-Presenter (TODO: Really?)
+- Usually hard to integrate in legacy codebases
+- As of May 2012: No way to set data-attributes
+
+** jQuery
+*** Advantages                                                      :BMCOL:
+:PROPERTIES:
+:BEAMER_col: .45
+:END:
+- More concise to use
+- Widely known
+- Nice wrappers available (jayq)
+
+*** Disadvantages                                                   :BMCOL:
+:PROPERTIES:
+:BEAMER_col: .45
+:END:
+- Syntax doesn't integrate very good
+- Uses own Array type which doesn't work out-of-the-box with Clojure's
+  Sequence abstractions
+
+* Applications
+
+* Performance
+** Closure Compiler
+** Size of generated Code
+
+* Tool Support
+** Available Libraries
+** ClojureScript One
+** Integrated Development Environments
+
+* Future Plans
+** TODO Recent: Pluggable Backends \\ Summer of Code Project by =NAME=
+*** Lexer extracted from monolithic Compiler
+*** Compiler implemented as modular Backend
+*** Soon:
+**** Lua
+**** Python
+**** C
+**** Malbolge?
+
+** Source Maps
+** Reactive Programming
+*** add-watch
+`add-watch' currently features
