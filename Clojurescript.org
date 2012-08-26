@@ -1,7 +1,7 @@
 #+TITLE:     ClojureScript
 #+AUTHOR:    Moritz Ulrich
 #+EMAIL:     moritz@tarn-vedra.de
-#+DATE:      2012-08-12 Sun
+#+DATE:      26.08.2012
 #+DESCRIPTION: More parentheses for the browser
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
@@ -13,6 +13,7 @@
 #+BEAMER_FRAME_LEVEL: 2
 #+BEAMER_HEADER_EXTRA: \usetheme{Boadilla}\usecolortheme{default}
 #+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+#+BEAMER: \setbeamertemplate{navigation symbols}{}
 
 #+STARTUP: indent beamer
 
@@ -77,7 +78,7 @@ with pure Javascript.
 
 *** ClojureScript
 #+BEGIN_SRC clojure
-  (.log js/console "Hello World")
+  (.log js/console "Hello World!")
 #+END_SRC
 
 ** Hello World v2
@@ -86,15 +87,14 @@ with pure Javascript.
   (println "Hello World!")
 #+END_SRC
 ** Clojure?
-- Modern LISP
-- Targets the JVM
-  - Great Java-Interop
-- Persistent Data Structures
-- Easy concurrent programming
-  - Built-in STM
-  - Reactive Actors ('Agents')
-  - Good encapsulation of State
-
+*** Modern LISP
+*** Targets the JVM
+**** Great Java-Interop
+*** Persistent Data Structures
+*** Easy concurrent programming
+**** Built-in STM
+**** Reactive Actors ('Agents')
+**** Good encapsulation of State
 ** ClojureScript?
 *** All advantages of Clojure
 - Functional Programming
@@ -107,7 +107,7 @@ with pure Javascript.
 - Reader still available!
 
 ** ClojureScript!
-*** TODO Created by Rich Hickey in %%DATE%%
+*** Created by Rich Hickey in 2011
 *** Clojure Compiler which targets Javascript
 *** Same Runtime as Clojure
 - Data Structures
@@ -138,11 +138,10 @@ with pure Javascript.
 #+END_SRC
 
 ** Why target Javascript?
-- Faster startup time
-- Widespread platform (Browsers)
-- Node.js
-- Advantages when using same code Server- and Client-Side
-
+*** Faster startup time
+*** Widespread platform (Browsers)
+*** Node.js
+*** Advantages when using same code Server- and Client-Side
 * Code Samples
 ** Platform Interop
 *** Function calls
@@ -162,6 +161,21 @@ with pure Javascript.
 #+BEGIN_SRC clojure
   (set! (.-prop obj) "Foo")
 #+END_SRC
+** Interop: Syntactic Sugar
+*** Double Dot
+#+BEGIN_SRC clojure
+  (.. ($ "#my-table")
+      (children "tr")
+      (children "td")
+      (hide))
+#+END_SRC
+*** Anonymous Functions
+#+BEGIN_SRC clojure
+  (fn [a b] (+ a b))
+#+END_SRC
+#+BEGIN_SRC clojure
+  #(+ %1 %2)
+#+END_SRC
 ** DOM Manipulation
 - Google Closure
 - jQuery
@@ -170,17 +184,18 @@ with pure Javascript.
 *** Advantages                                                      :BMCOL:
 :PROPERTIES:
 :BEAMER_col: .45
+:BEAMER_envargs: C[t]
 :END:
 - Used by ClojureScript itself
 - Very rich library containing many kinds of UI elements
 - Integrates nicely with the Google Closure compiler
 
-*** Disadvantages                                                        :BMCOL:
+*** Disadvantages                                                   :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.45
+:BEAMER_envargs: C[t]
 :END:
 - Hard to use
-- Model-View-Presenter (TODO: Really?)
 - Usually hard to integrate in legacy codebases
 - As of May 2012: No way to set data-attributes
 
@@ -188,6 +203,7 @@ with pure Javascript.
 *** Advantages                                                      :BMCOL:
 :PROPERTIES:
 :BEAMER_col: .45
+:BEAMER_envargs: C[t]
 :END:
 - More concise to use
 - Widely known
@@ -196,24 +212,84 @@ with pure Javascript.
 *** Disadvantages                                                   :BMCOL:
 :PROPERTIES:
 :BEAMER_col: .45
+:BEAMER_envargs: C[t]
 :END:
 - Syntax doesn't integrate very good
 - Uses own Array type which doesn't work out-of-the-box with Clojure's
   Sequence abstractions
 
-* Applications
-
-* Performance
+* Implementation
+** Compilation
+1) Reader
+2) Macros
+3) Analysis
+4) Emission
+5) Closure Compiler
 ** Closure Compiler
+*** Optimizing compiler for Javascript
+*** Performs the following:
+**** Warnings
+**** Dead-code elimination
+**** Optimization
+*** Code must be written in a very strict style
+**** ClojureScript generates such code
 ** Size of generated Code
+*** Code                                                          :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+BEGIN_SRC clojure
+  (ns foo.bar)
+
+  (defn ^:export greet [name]
+    (js/alert (str "Hello, " name "!")))
+#+END_SRC
+
+*** Result                                                        :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+BEGIN_EXAMPLE
+  91914  out-advanced.js
+  724380 out-pretty.js
+#+END_EXAMPLE
+
+** Limitations
+*** No Multithreading
+**** Atoms and Refs are still useful
+*** Complicated use of macros
+*** Many Clojure libraries don't work without modifications
 
 * Tool Support
 ** Available Libraries
+*** User-Interface
+**** Google Closure
+**** jQuery UI
+*** DOM Manipulation/Generation
+**** jayq (jQuery)
+**** crate/hiccups (Hiccup)
+**** enfocus (Enlive)
+*** All other Javascript libraries
+** IDEs
+*** Editor Support
+**** clojurescript-mode (Emacs)
+*** Build Tools
+**** lein-cljsbuild (Leiningen)
+**** cljs-watch
+*** REPL
+**** =lein cljsbuild repl-{listen,rhino}=
 ** ClojureScript One
-** Integrated Development Environments
+*** Sample single-page application
+*** Browser connected REPL
+*** Well documented
+*** Great (but complex) starting point
 
 * Future Plans
-** TODO Recent: Pluggable Backends \\ Summer of Code Project by =NAME=
+** Future Plans
+*** Pluggable Backends
+*** Source Maps
+*** Reactive Programming
+** Recent: Pluggable Backends \\ Summer of Code Project by Raphael Amiard
 *** Lexer extracted from monolithic Compiler
 *** Compiler implemented as modular Backend
 *** Soon:
@@ -223,6 +299,55 @@ with pure Javascript.
 **** Malbolge?
 
 ** Source Maps
+*** Map from compiled Javascript to ClojureScript
+*** Great for debugging errors
+*** Implemented in Chrome, support in ClojureScript coming
+
 ** Reactive Programming
-*** add-watch
-`add-watch' currently features
+*** Most stuff happens in the DOM
+*** Manual DOM Manipulation is cumbersome
+*** Solution: Bind values of elements/data-structures to modified values of other data structures
+
+* Conclusion
+** Conclusions
+** Good for
+*** Single Page applications with much logic
+*** Re-use of code written for the server
+
+** Not so good for
+*** Small utility scripts (high file size)
+*** High performance code
+
+** Starting Points
+*** Clojure Google Group
+[[http://groups.google.com/group/clojure]]
+*** ClojureScript on Github
+[[https://github.com/clojure/clojurescript]]
+
+(Don't follow the 'Quick Start' Guide! Use lein-cljsbuild for building
+projects or starting a REPL.)
+*** lein-cljsbuild
+[[https://github.com/emezeske/lein-cljsbuild]]
+*** ClojureScript One
+[[http://clojurescriptone.com/]]
+
+** Links
+| Google Closure | https://developers.google.com/closure/ |
+| jQuery         | [[http://jquery.com/]]                     |
+| jayq           | [[https://github.com/ibdknox/jayq]]        |
+| crate          | [[https://github.com/ibdknox/crate]]       |
+| hiccups        | [[https://github.com/teropa/hiccups]]      |
+| enfocus        | [[https://github.com/ckirkendall/enfocus]] |
+| cljs-watch     | [[https://github.com/ibdknox/cljs-watch]]  |
+
+
+** So long... \\ ...and thanks for all the fish
+Thank you!
+
+** Contact
+
+| Moritz Ulrich                 |
+|-------------------------------|
+| =moritz@tarn-vedra.de=        |
+| [[https://github.com/the-kenny/]] |
+| [[http://twitter.com/the_kenny]] |
