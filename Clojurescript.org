@@ -32,14 +32,6 @@ This presentation gives an overview over the ClojureScript project:
 IDEs, Tools, Libraries, and advantages and disadvantages in comparison
 with pure Javascript.
 
-* Brainstorming                                                    :noexport:
-  - Wieso ClojureScript?
-  - Was bietet es im Vergleich zu JavaScript?
-  - Warum nimmt man nicht einfach JavaScript, wo es viele Ressourcen, Programmierer, Tools gibt
-  - Performance
-
-* Vorbereitung [0/1]                                               :noexport:
-  - [ ] 'Der Gute Vortrag' lesen
 
 * Outline                                                          :noexport:
 - Minimale Einführung in Clojure(Script)
