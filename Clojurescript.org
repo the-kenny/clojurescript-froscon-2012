@@ -80,6 +80,11 @@ with pure Javascript.
   (.log js/console "Hello World")
 #+END_SRC
 
+** Hello World v2
+*** With =clojure.core/*print-fn*= bound to a function:
+#+BEGIN_SRC clojure
+  (println "Hello World!")
+#+END_SRC
 ** Clojure?
 - Modern LISP
 - Targets the JVM
@@ -94,10 +99,12 @@ with pure Javascript.
 *** All advantages of Clojure
 - Functional Programming
 - Persistent Data Structures
+- Powerful concise Syntax
 - Great Host Interop
 *** Runs in the Browser
 - Wide target range
 *** No =eval=
+- Reader still available!
 
 ** ClojureScript!
 *** TODO Created by Rich Hickey in %%DATE%%
@@ -109,6 +116,26 @@ with pure Javascript.
 *** Cleaner Codebase
 - 100% Clojure, no Java/Javascript
 - Much of Clojure is implemented in Java
+
+** Proof?
+*** =find . -name *.js=                                           :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+BEGIN_SRC sh
+  ./samples/hello-js/externed-lib.js
+  ./samples/hello-js/externs.js
+  ./samples/hello-js/my-external-lib.js
+  ./src/cljs/cljs/nodejs_externs.js
+#+END_SRC
+*** =cat ./src/cljs/cljs/nodejs_externs.js=                       :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+BEGIN_SRC javascript
+  function require(){}
+  function process(){}
+#+END_SRC
 
 ** Why target Javascript?
 - Faster startup time
